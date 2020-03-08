@@ -28,9 +28,17 @@ describe('server', () => {
 
   it('should do something', async () => {
     const res = await rp(
-      'http://localhost:3000/foods?nutrients=protein:2&operator=or'
+      'http://localhost:3000/foods?nutrients[0]=protein:2&operator=or'
     );
-    console.log(res);
+    console.log({ res });
+    expect(true).toBe(true);
+  });
+
+  it('should do something', async () => {
+    const res = await rp(
+      'http://localhost:3000/foods?nutrients[0]=protein:2&nutrients[1]=sugar:1&operator=or'
+    );
+    console.log({ res });
     expect(true).toBe(true);
   });
 });

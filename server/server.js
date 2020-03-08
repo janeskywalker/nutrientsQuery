@@ -7,15 +7,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const nutrientIdPair = {
-  protien: '203',
-  fat: '204',
-  carbonhydrate: '205',
-  sugar: '269'
-};
-
 app.get('/foods', (req, res) => {
-  console.log(req.query);
+  console.log('query:', req.query);
 
   const operator = req.query.operator || 'and';
 
