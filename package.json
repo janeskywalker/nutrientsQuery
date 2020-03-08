@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "jest --verbose --watchAll query",
+    "start": "node server/index.js",
+    "start:dev": "nodemon server/index.js"
   },
   "author": "Jane Zeng",
   "license": "ISC",
@@ -16,6 +18,7 @@
   "devDependencies": {
     "deep-equal": "^1.1.0",
     "jest": "^25.1.0",
+    "nodemon": "^2.0.2",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
     "wait-on": "^4.0.1"

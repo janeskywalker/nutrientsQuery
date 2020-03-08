@@ -4,6 +4,7 @@ let httpServer = null;
 
 describe('server', () => {
   beforeAll(() => {
+    console.log('beforeAll');
     return new Promise(resolve => {
       httpServer = server.listen(process.env.PORT || 3000, () => {
         console.log(
@@ -26,13 +27,13 @@ describe('server', () => {
     }
   });
 
-  it('should do something', async () => {
-    const res = await rp(
-      'http://localhost:3000/foods?nutrients[0]=protein:2&operator=or'
-    );
-    console.log({ res });
-    expect(true).toBe(true);
-  });
+  // it('should do something', async () => {
+  //   const res = await rp(
+  //     'http://localhost:3000/foods?nutrients[0]=protein:2&operator=or'
+  //   );
+  //   console.log({ res });
+  //   expect(true).toBe(true);
+  // });
 
   it('should do something', async () => {
     const res = await rp(
