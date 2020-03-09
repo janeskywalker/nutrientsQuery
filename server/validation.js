@@ -6,15 +6,13 @@ const nutrientIdPair = {
 };
 
 function validate(inputObj) {
-  console.log('validating')
-  console.log({ inputObj });
+  console.log('validating');
 
   const validatedObj = {};
   const errors = [];
 
   if (Array.isArray(inputObj.nutrients)) {
     inputObj.nutrients.forEach(element => {
-      console.log({ element });
       const inputArr = element.split(':');
       if (inputArr.length !== 2) {
         errors.push('Input is invalid');
@@ -22,7 +20,7 @@ function validate(inputObj) {
 
       const [rawNutrient, rawValue] = inputArr;
       const inputNutrient = rawNutrient.toLowerCase();
-      const inputValue = parseInt(rawValue);
+      const inputValue = parseFloat(rawValue);
       if (isNaN(inputValue)) {
         errors.push(`${rawValue} is not a number for ${inputNutrient}`);
       }
@@ -36,9 +34,15 @@ function validate(inputObj) {
   }
 
   if (errors.length > 0) {
-    return errors;
+    return {
+      status: 'error',
+      data: errors
+    };
   } else {
-    return validatedObj;
+    return {
+      status: 'success',
+      data: validatedObj
+    };
   }
 }
 

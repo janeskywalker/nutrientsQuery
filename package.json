@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose --watchAll query",
+    "test": "jest --verbose --watchAll server",
     "start": "node server/index.js",
     "start:dev": "nodemon server/index.js"
   },

@@ -27,19 +27,43 @@ describe('server', () => {
     }
   });
 
-  // it('should do something', async () => {
-  //   const res = await rp(
-  //     'http://localhost:3000/foods?nutrients[0]=protein:2&operator=or'
-  //   );
-  //   console.log({ res });
-  //   expect(true).toBe(true);
-  // });
-
-  it('should do something', async () => {
+  it('should return status code 200 for a single query for nutrient', async () => {
     const res = await rp(
-      'http://localhost:3000/foods?nutrients[0]=protein:2&nutrients[1]=sugar:1&operator=or'
+      'http://localhost:3000/foods?nutrients[0]=protein:1&operator=or'
     );
-    console.log({ res });
-    expect(true).toBe(true);
+    console.log(JSON.parse(res).status);
+    expect(JSON.parse(res).status).toBe(200);
+  });
+
+  it('should return status code 200 for query of multiple nutrients with "or"', async () => {
+    const res = await rp(
+      'http://localhost:3000/foods?nutrients[0]=protein:1&nutrients[1]=sugar:2&operator=or'
+    );
+    console.log(JSON.parse(res).status);
+    expect(JSON.parse(res).status).toBe(200);
+  });
+
+  it('should return status code 200 for query of multiple nutrients with "and"', async () => {
+    const res = await rp(
+      'http://localhost:3000/foods?nutrients[0]=protein:1&nutrients[1]=sugar:2&operator=and'
+    );
+    console.log(JSON.parse(res).status);
+    expect(JSON.parse(res).status).toBe(200);
+  });
+
+  it('should return status code 400 for query of invalid nutrient', async () => {
+    const res = await rp(
+      'http://localhost:3000/foods?nutrients[0]=iron:1&operator=and'
+    );
+    console.log(JSON.parse(res).status);
+    expect(JSON.parse(res).status).toBe(400);
+  });
+
+  it('should return status code 400 for query of invalid value', async () => {
+    const res = await rp(
+      'http://localhost:3000/foods?nutrients[0]=protein:one&operator=and'
+    );
+    console.log(JSON.parse(res).status);
+    expect(JSON.parse(res).status).toBe(400);
   });
 });
