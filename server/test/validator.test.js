@@ -1,7 +1,7 @@
 const { validate } = require('../validation');
 
 describe('validator', () => {
-  it('should validate nutrient input', () => {
+  it('should return formatted object for valid input', () => {
     const result = validate({
       nutrients: ['protein:2'],
       operator: 'and'
