@@ -1,3 +1,21 @@
 * {
-  color: red;
+  color: #256477;
+  background-color: rgb(236, 170, 115);
+}
+
+.nutrients-list {
+  list-style: none;
+}
+
+.input-amount {
+  width: 60px;
+  margin-left: 10px;
+}
+
+.submit-button {
+  background-color: #78b4c5;
+  color: whitesmoke;
+  width: 100px;
+  height: 40px;
+  border-radius: 20%;
 }
