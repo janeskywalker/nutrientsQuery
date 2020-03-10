@@ -1,6 +1,29 @@
 import React, { useEffect, useState } from 'react';
+import Form from './Form';
 
 const WEB_ADDRESS = 'http://localhost:3000/foods?';
+
+const createQueryRoute = state => {
+  console.log('creating Query Route');
+  let queryRoute = '';
+  let nutrientIndex = 0;
+
+  for (let key in state) {
+    const stateValue = parseFloat(state[key]);
+    if (!isNaN(stateValue)) {
+      console.log({ key, stateValue });
+      if (nutrientIndex === 0) {
+        queryRoute += `nutrients[${nutrientIndex}]=${key}:${stateValue}`;
+      } else if (nutrientIndex > 0) {
+        queryRoute += `&nutrients[${nutrientIndex}]=${key}:${stateValue}`;
+      }
+      nutrientIndex++;
+    }
+  }
+  queryRoute += `&operator=${state.operator}`;
+  console.log({ queryRoute });
+  return queryRoute;
+};
 
 const Selections = ({ onSelectionsChange }) => {
   const [state, setState] = useState({
@@ -16,10 +39,15 @@ const Selections = ({ onSelectionsChange }) => {
     let controller = null;
 
     if (state.isSubmitting) {
+      console.log('submitting fetch');
       controller = new AbortController();
       const signal = controller.signal;
 
-      fetch('http://localhost:3000/foods?nutrients[0]=protein:1&operator=or', {
+      const queryRoute = createQueryRoute(state);
+      const url = WEB_ADDRESS + queryRoute;
+      console.log({ url });
+
+      fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -47,11 +75,18 @@ const Selections = ({ onSelectionsChange }) => {
   }, [state.isSubmitting]);
 
   const onSubmit = evt => {
-    console.log({ evt });
     evt.preventDefault();
     setState({
       ...state,
       isSubmitting: true
+    });
+  };
+
+  const onOperatorChange = evt => {
+    console.log('operator changing');
+    setState({
+      ...state,
+      operator: evt.target.value
     });
   };
 
@@ -69,41 +104,13 @@ const Selections = ({ onSelectionsChange }) => {
   return (
     <>
       <div id="selections" className="selections">
-        <h2>Please select nutrients:</h2>
-
-        <form className="nutrients-search-form" onSubmit={onSubmit}>
-          <ul>
-            <li className="input-group">
-              <label htmlFor="protein">Protein</label>
-              <input
-                className="input-amount"
-                name="protein"
-                placeholder="amount"
-                onChange={onChange}
-              ></input>
-            </li>
-
-            <li className="input-group">
-              <label htmlFor="sugar">Sugar</label>
-              <input
-                className="input-amount"
-                name="sugar"
-                placeholder="amount"
-                onChange={onChange}
-              ></input>
-            </li>
-          </ul>
-
-          <div className="form-footer">
-            <button
-              className="submit-button"
-              disabled={state.isSubmitting}
-              type="submit"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
+        <Form
+          onSubmit={onSubmit}
+          onChange={onChange}
+          onOperatorChange={onOperatorChange}
+          isSubmitting={state.isSubmitting}
+          state={state}
+        />
       </div>
     </>
   );

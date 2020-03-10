@@ -62,8 +62,8 @@ function queryData(validatedObj, operator, data) {
     }
   }
 
-  console.log('query result:', queryResult);
-  // queryResult = [...new Set(queryResult)];
+  console.log('query result:', queryResult.length);
+  queryResult = [...new Set(queryResult)];
   return queryResult;
 }
 

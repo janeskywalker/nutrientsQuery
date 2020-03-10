@@ -1,7 +1,7 @@
 const nutrientIdPair = {
   protein: '203',
   fat: '204',
-  carbonhydrate: '205',
+  carb: '205',
   sugar: '269'
 };
 

@@ -17,5 +17,13 @@
   color: whitesmoke;
   width: 100px;
   height: 40px;
-  border-radius: 20%;
+  border-radius: 30%;
+}
+
+.show-foods {
+  display: inline;
+}
+
+.operator {
+  display: inline;
 }
