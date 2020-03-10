@@ -1,30 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+const WEB_ADDRESS = 'http://localhost:3000/foods?';
 
 const Selections = ({ onSelectionsChange }) => {
   const [state, setState] = useState({
     protein: null,
     sugar: null,
     fat: null,
-    carb: null
+    carb: null,
+    operator: 'and',
+    isSubmitting: false
   });
 
-  const onSubmit = evt => {
-    evt.preventDefault();
-    console.log('submitting');
+  useEffect(() => {
+    let controller = null;
 
-    fetch('http://localhost:3000/foods?nutrients[0]=protein:1&operator=or', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => {
-        return res.json();
+    if (state.isSubmitting) {
+      controller = new AbortController();
+      const signal = controller.signal;
+
+      fetch('http://localhost:3000/foods?nutrients[0]=protein:1&operator=or', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        signal
       })
-      .then(myJson => {
-        console.log({ myJson });
-        onSelectionsChange(myJson.message);
-      });
+        .then(res => {
+          return res.json();
+        })
+        .then(myJson => {
+          console.log({ myJson });
+          onSelectionsChange(myJson.message);
+          setState({
+            ...state,
+            isSubmitting: false
+          });
+        });
+    }
+
+    return function unmount() {
+      if (controller !== null) {
+        controller.abort();
+      }
+    };
+  }, [state.isSubmitting]);
+
+  const onSubmit = evt => {
+    console.log({ evt });
+    evt.preventDefault();
+    setState({
+      ...state,
+      isSubmitting: true
+    });
   };
 
   const onChange = evt => {
@@ -44,69 +72,38 @@ const Selections = ({ onSelectionsChange }) => {
         <h2>Please select nutrients:</h2>
 
         <form className="nutrients-search-form" onSubmit={onSubmit}>
-          <div className="input-group">
-            <label htmlFor="protein">Protein</label>
-            <textarea
-              className="input-amount"
-              name="protein"
-              placeholder="amount"
-              onChange={onChange}
-            ></textarea>
-          </div>
+          <ul>
+            <li className="input-group">
+              <label htmlFor="protein">Protein</label>
+              <input
+                className="input-amount"
+                name="protein"
+                placeholder="amount"
+                onChange={onChange}
+              ></input>
+            </li>
 
-          <div className="input-group">
-            <label htmlFor="sugar">Sugar</label>
-            <textarea
-              className="input-amount"
-              name="sugar"
-              placeholder="amount"
-              onChange={onChange}
-            ></textarea>
-          </div>
+            <li className="input-group">
+              <label htmlFor="sugar">Sugar</label>
+              <input
+                className="input-amount"
+                name="sugar"
+                placeholder="amount"
+                onChange={onChange}
+              ></input>
+            </li>
+          </ul>
 
           <div className="form-footer">
-            <button className="submit-button" type="submit">
+            <button
+              className="submit-button"
+              disabled={state.isSubmitting}
+              type="submit"
+            >
               Submit
             </button>
           </div>
         </form>
-
-        {/* <div>
-          <ul id="nutrients-list" className="nutrients-list">
-            <li>
-              Protien
-              <input
-                id="input-amount"
-                className="input-amount"
-                placeholder="amount"
-              />
-            </li>
-            <li>
-              Sugar
-              <input
-                id="input-amount"
-                className="input-amount"
-                placeholder="amount"
-              />
-            </li>
-            <li>
-              Fat
-              <input
-                id="input-amount"
-                className="input-amount"
-                placeholder="amount"
-              />
-            </li>
-            <li>
-              Carbonhydrate
-              <input
-                id="input-amount"
-                className="input-amount"
-                placeholder="amount"
-              />
-            </li>
-          </ul>
-        </div> */}
       </div>
     </>
   );

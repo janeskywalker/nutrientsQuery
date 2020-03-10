@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   entry: './client/index.js',
   mode: 'development',
+  devtool: 'source-map',
   output: {
     path: path.join(__dirname, '/server/public'),
     filename: 'main.js'
