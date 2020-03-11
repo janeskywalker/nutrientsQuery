@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import './App.css';
 import Selections from './components/Selections';
 import ResultDisplay from './components/ResultDisplay';
-import ErrorDisplay from './components/ErrorDisplay';
 
 const App = () => {
   const [state, setState] = useState({
-    error: null,
     queryResult: null
   });
 
@@ -22,18 +20,18 @@ const App = () => {
   };
 
   return (
-    <>
-      <div id="hero" className="hero">
+    <main>
+      <div className="greeting-wrapper">
         <h1>Welcome to Food Nutrition API</h1>
       </div>
-      <Selections onSelectionsChange={onSelectionsChange} />
+      <div className="content-wrapper">
+        <Selections onSelectionsChange={onSelectionsChange} />
 
-      {state.queryResult ? (
-        <ResultDisplay queryResult={state.queryResult} />
-      ) : null}
-
-      {state.error ? <ErrorDisplay error={state.error} /> : null}
-    </>
+        {state.queryResult ? (
+          <ResultDisplay queryResult={state.queryResult} />
+        ) : null}
+      </div>
+    </main>
   );
 };
 

@@ -32,7 +32,8 @@ const Selections = ({ onSelectionsChange }) => {
     fat: null,
     carb: null,
     operator: 'and',
-    isSubmitting: false
+    isSubmitting: false,
+    hasError: false
   });
 
   useEffect(() => {
@@ -57,14 +58,24 @@ const Selections = ({ onSelectionsChange }) => {
         .then(res => {
           return res.json();
         })
-        .then(myJson => {
-          console.log({ myJson });
-          onSelectionsChange(myJson.message);
-          setState({
-            ...state,
-            isSubmitting: false
-          });
-        });
+        .then(
+          myJson => {
+            console.log({ myJson });
+            onSelectionsChange(myJson.message);
+            setState({
+              ...state,
+              isSubmitting: false,
+              hasError: false
+            });
+          },
+          err => {
+            console.error(err);
+            setState({
+              ...state,
+              hasError: true
+            });
+          }
+        );
     }
 
     return function unmount() {
@@ -109,7 +120,8 @@ const Selections = ({ onSelectionsChange }) => {
           onChange={onChange}
           onOperatorChange={onOperatorChange}
           isSubmitting={state.isSubmitting}
-          state={state}
+          operator={state.operator}
+          hasError={state.hasError}
         />
       </div>
     </>

@@ -5,21 +5,25 @@ const Form = ({
   onOperatorChange,
   onChange,
   isSubmitting,
-  state
+  operator,
+  hasError
 }) => {
+  console.log({ hasError });
   return (
     <form className="nutrients-search-form" onSubmit={onSubmit}>
-      <h2 className="show-foods">Show Foods with</h2>
-      <select
-        id="oprator"
-        className="operator"
-        value={state.operator}
-        onChange={onOperatorChange}
-      >
-        <option value="and">All</option>
-        <option value="or">Any</option>
-      </select>
-      <h2 className="show-foods">of the following Nutrients:</h2>
+      <div className="selection-header-wrapper">
+        <h2 className="select-foods">Show Foods with</h2>
+        <select
+          id="oprator"
+          className="operator"
+          value={operator}
+          onChange={onOperatorChange}
+        >
+          <option value="and">All</option>
+          <option value="or">Any</option>
+        </select>
+        <h2 className="select-foods">of the following Nutrients:</h2>
+      </div>
 
       <ul>
         <li className="input-group">
@@ -28,9 +32,12 @@ const Form = ({
             className="input-amount"
             name="protein"
             type="number"
+            min="0"
+            step=".01"
             placeholder="amount"
             onChange={onChange}
           ></input>
+          g
         </li>
 
         <li className="input-group">
@@ -39,9 +46,12 @@ const Form = ({
             className="input-amount"
             name="sugar"
             type="number"
+            min="0"
+            step=".01"
             placeholder="amount"
             onChange={onChange}
           ></input>
+          g
         </li>
 
         <li className="input-group">
@@ -50,9 +60,12 @@ const Form = ({
             className="input-amount"
             name="fat"
             type="number"
+            min="0"
+            step=".01"
             placeholder="amount"
             onChange={onChange}
           ></input>
+          g
         </li>
 
         <li className="input-group">
@@ -61,11 +74,20 @@ const Form = ({
             className="input-amount"
             name="carb"
             type="number"
+            min="0"
+            step=".01"
             placeholder="amount"
             onChange={onChange}
           ></input>
+          g
         </li>
       </ul>
+
+      {hasError ? (
+        <div className="errorDisplay">
+          There was an error handling your request. Please try again.
+        </div>
+      ) : null}
 
       <div className="form-footer">
         <button className="submit-button" disabled={isSubmitting} type="submit">

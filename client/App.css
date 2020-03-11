@@ -1,29 +1,83 @@
 * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+main {
   color: #256477;
-  background-color: rgb(236, 170, 115);
+  font-family: sans-serif;
+  background-color: whitesmoke;
 }
 
-.nutrients-list {
-  list-style: none;
+li {
+  display: block;
+  padding: 10px 0;
 }
 
-.input-amount {
-  width: 60px;
-  margin-left: 10px;
+h1 {
+  color: rgb(250, 124, 7);
 }
 
-.submit-button {
-  background-color: #78b4c5;
-  color: whitesmoke;
-  width: 100px;
-  height: 40px;
-  border-radius: 30%;
+input,
+select,
+button {
+  appearance: none;
+  border: none;
 }
 
-.show-foods {
+.greeting-wrapper {
+  border-bottom: solid rgb(250, 124, 7) 1px;
+  padding: 10px 20px;
+}
+
+.content-wrapper {
+  margin: 0 auto;
+  width: 80%;
+  max-width: 800px;
+}
+
+.selection-header-wrapper {
+  padding: 15px 0;
+}
+
+.select-foods {
   display: inline;
 }
 
 .operator {
-  display: inline;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 400;
+  color: #256477;
+  margin-left: 4px;
+  margin-right: 8px;
+}
+
+.input-group {
+  /* display: flex;
+  justify-content: space-between; */
+  display: grid;
+  grid-template-columns: 2fr 1fr 3fr;
+}
+
+.input-amount {
+  width: 80px;
+  margin-left: 10px;
+  padding: 6px 0;
+  border: solid #256477, 1px;
+}
+
+.submit-button {
+  background-color: rgb(250, 124, 7);
+  font-size: medium;
+  color: whitesmoke;
+  width: 100px;
+  height: 40px;
+  border-radius: 16px;
+}
+
+.errorDisplay {
+  color: red;
+  padding: 10px;
 }
