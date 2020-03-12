@@ -11,8 +11,6 @@ const App = () => {
   console.log({ state });
 
   const onSelectionsChange = queryResult => {
-    console.log('updating query result in App');
-    console.log({ queryResult });
     setState({
       ...state,
       queryResult: queryResult

@@ -8,7 +8,25 @@ const Form = ({
   operator,
   hasError
 }) => {
-  console.log({ hasError });
+  const formData = [
+    {
+      label: 'Protein',
+      name: 'protein'
+    },
+    {
+      label: 'Sugar',
+      name: 'sugar'
+    },
+    {
+      label: 'Fat',
+      name: 'fat'
+    },
+    {
+      label: 'Carbohydrate, by difference',
+      name: 'carb'
+    }
+  ];
+
   return (
     <form className="nutrients-search-form" onSubmit={onSubmit}>
       <div className="selection-header-wrapper">
@@ -22,65 +40,28 @@ const Form = ({
           <option value="and">All</option>
           <option value="or">Any</option>
         </select>
-        <h2 className="select-foods">of the following Nutrients:</h2>
+        <h2 className="select-foods">
+          of the following Nutrients Over the select Amount:
+        </h2>
       </div>
 
       <ul>
-        <li className="input-group">
-          <label htmlFor="protein">Protein</label>
-          <input
-            className="input-amount"
-            name="protein"
-            type="number"
-            min="0"
-            step=".01"
-            placeholder="amount"
-            onChange={onChange}
-          ></input>
-          g
-        </li>
-
-        <li className="input-group">
-          <label htmlFor="sugar">Sugar</label>
-          <input
-            className="input-amount"
-            name="sugar"
-            type="number"
-            min="0"
-            step=".01"
-            placeholder="amount"
-            onChange={onChange}
-          ></input>
-          g
-        </li>
-
-        <li className="input-group">
-          <label htmlFor="fat">Fat</label>
-          <input
-            className="input-amount"
-            name="fat"
-            type="number"
-            min="0"
-            step=".01"
-            placeholder="amount"
-            onChange={onChange}
-          ></input>
-          g
-        </li>
-
-        <li className="input-group">
-          <label htmlFor="carb">Carbonhydrate</label>
-          <input
-            className="input-amount"
-            name="carb"
-            type="number"
-            min="0"
-            step=".01"
-            placeholder="amount"
-            onChange={onChange}
-          ></input>
-          g
-        </li>
+        {formData.map(data => {
+          return (
+            <li className="input-group">
+              <label htmlFor={data.name}>{data.label}</label>
+              <input
+                className="input-amount"
+                name={data.name}
+                type="number"
+                min="0"
+                step=".01"
+                placeholder="amount in gram"
+                onChange={onChange}
+              ></input>
+            </li>
+          );
+        })}
       </ul>
 
       {hasError ? (

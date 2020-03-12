@@ -4,7 +4,6 @@ import Form from './Form';
 const WEB_ADDRESS = 'http://localhost:3000/foods?';
 
 const createQueryRoute = state => {
-  console.log('creating Query Route');
   let queryRoute = '';
   let nutrientIndex = 0;
 
@@ -12,16 +11,12 @@ const createQueryRoute = state => {
     const stateValue = parseFloat(state[key]);
     if (!isNaN(stateValue)) {
       console.log({ key, stateValue });
-      if (nutrientIndex === 0) {
-        queryRoute += `nutrients[${nutrientIndex}]=${key}:${stateValue}`;
-      } else if (nutrientIndex > 0) {
-        queryRoute += `&nutrients[${nutrientIndex}]=${key}:${stateValue}`;
-      }
+      const prefix = nutrientIndex > 0 ? '&' : '';
+      queryRoute += `${prefix}nutrients[${nutrientIndex}]=${key}:${stateValue}`;
       nutrientIndex++;
     }
   }
   queryRoute += `&operator=${state.operator}`;
-  console.log({ queryRoute });
   return queryRoute;
 };
 
@@ -40,13 +35,11 @@ const Selections = ({ onSelectionsChange }) => {
     let controller = null;
 
     if (state.isSubmitting) {
-      console.log('submitting fetch');
       controller = new AbortController();
       const signal = controller.signal;
 
       const queryRoute = createQueryRoute(state);
       const url = WEB_ADDRESS + queryRoute;
-      console.log({ url });
 
       fetch(url, {
         method: 'GET',
@@ -60,7 +53,6 @@ const Selections = ({ onSelectionsChange }) => {
         })
         .then(
           myJson => {
-            console.log({ myJson });
             onSelectionsChange(myJson.message);
             setState({
               ...state,
@@ -94,7 +86,6 @@ const Selections = ({ onSelectionsChange }) => {
   };
 
   const onOperatorChange = evt => {
-    console.log('operator changing');
     setState({
       ...state,
       operator: evt.target.value
@@ -109,8 +100,6 @@ const Selections = ({ onSelectionsChange }) => {
       [name]: value
     });
   };
-
-  console.log({ state });
 
   return (
     <>

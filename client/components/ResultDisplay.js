@@ -1,9 +1,6 @@
 import React from 'react';
 
 const ResultDisplay = ({ queryResult }) => {
-  console.log('display result');
-  console.log({ queryResult });
-
   return (
     <>
       <div id="resultDisplay" className="resultDisplay">

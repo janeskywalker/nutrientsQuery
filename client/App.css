@@ -7,7 +7,7 @@
 main {
   color: #256477;
   font-family: sans-serif;
-  background-color: whitesmoke;
+  background-color: white;
 }
 
 li {
@@ -33,7 +33,7 @@ button {
 
 .content-wrapper {
   margin: 0 auto;
-  width: 80%;
+  width: 60%;
   max-width: 800px;
 }
 
@@ -55,17 +55,22 @@ button {
 }
 
 .input-group {
-  /* display: flex;
-  justify-content: space-between; */
-  display: grid;
-  grid-template-columns: 2fr 1fr 3fr;
+  display: flex;
+  justify-content: space-between;
+}
+
+input:focus {
+  border: 1px solid rgb(250, 124, 7);
+  outline: none;
 }
 
 .input-amount {
-  width: 80px;
+  width: 40%;
   margin-left: 10px;
-  padding: 6px 0;
+  padding: 6px;
   border: solid #256477, 1px;
+  font-size: 14px;
+  background-color: whitesmoke;
 }
 
 .submit-button {
@@ -75,6 +80,11 @@ button {
   width: 100px;
   height: 40px;
   border-radius: 16px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: rgb(248, 157, 72);
 }
 
 .errorDisplay {
